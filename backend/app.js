@@ -44,19 +44,29 @@ const upload = multer({ storage: storage });
 
 // Endpoint to handle form submission
 app.post('/updateUser', upload.single('photo'), async (req, res) => {
- try {
-    const newUser = new User({
-      username: req.body.username,
-      photo: req.file.path, // Assuming you want to store the file path
-    });
-
-    await newUser.save();
-    res.status(200).json({ message: 'Data saved successfully' });
- } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Server error' });
- }
-});
+   try {
+      const newUser = new User({
+        username: req.body.username,
+        photo: req.file.path, // Assuming you want to store the file path
+      });
+  
+      await newUser.save();
+  
+      // Delete the file after it's saved to the database
+      fs.unlink(req.file.path, (err) => {
+        if (err) {
+          console.error('Error deleting file:', err);
+        } else {
+          console.log('File deleted successfully');
+        }
+      });
+  
+      res.status(200).json({ message: 'Data saved successfully' });
+   } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Server error' });
+   }
+  });
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
