@@ -5,15 +5,6 @@ import top from "../assests/top-landing.jpg";
 import { useNavigate } from "react-router-dom";
 import { animateScroll as scroll } from "react-scroll";
 
-const fadeIn = keyframes`
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-`;
-
 const Home = styled.div`
   height: min-content;
   background-color: rgb(6, 19, 50);
@@ -34,9 +25,9 @@ const Content = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-left: 30px;
+  margin-left: 60px;
   margin-top: 100px;
-
+  
   h1{
     color: #ad6661;
     font-size: 50px;
@@ -45,8 +36,7 @@ const Content = styled.div`
     color: white;
     font-size: 22px;
   }
-
-
+  
   button {
     padding: 15px;
     border-radius: 7px;
@@ -55,7 +45,6 @@ const Content = styled.div`
     margin-top: 90px;
     cursor: pointer;
     width: 200px;
-    opacity: 0;
 
     &:hover {
       background-color: #0889fc;
@@ -64,7 +53,7 @@ const Content = styled.div`
       box-shadow: 0px 0px 15px #0889fc;
     }
   }
-
+  
   @media only screen and (max-width: 721px){
     h1{
       font-size: 30px;
@@ -72,10 +61,14 @@ const Content = styled.div`
     h5{
       font-size: 15px;
     }
+    button{
+      align-self: center;
+    }
+    margin-left: 30px;
   }
-`;
-
-const HeroImg = styled.div`
+  `;
+  
+  const HeroImg = styled.div`
   img {
     height: 400px;
     object-fit: contain;
@@ -108,15 +101,22 @@ const About = styled.div`
   p {
     text-align: center;
     margin-top: 20px;
-    margin-left: 30px;
+    margin-left: 60px;
     font-size: 23px;
-    margin-right: 30px;
+    margin-right: 60px;
     margin-bottom: 20px;
   }
 
   h3, h5 {
     font-size: 25px;
     align-self: center;
+  }
+
+  @media only screen and (max-width: 721px){
+    p {
+      margin-left: 30px;
+      margin-right: 30px;
+    }
   }
 `;
 
