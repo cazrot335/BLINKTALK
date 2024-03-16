@@ -42,31 +42,46 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
+// Endpoint to fetch all users
+app.get('/users', async (req, res) => {
+  try {
+    const users = await User.find({});
+    res.status(200).json(users);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
 // Endpoint to handle form submission
 app.post('/updateUser', upload.single('photo'), async (req, res) => {
-   try {
-      const newUser = new User({
-        username: req.body.username,
-        photo: req.file.path, // Assuming you want to store the file path
-      });
-  
-      await newUser.save();
-  
-      // Delete the file after it's saved to the database
-      fs.unlink(req.file.path, (err) => {
-        if (err) {
-          console.error('Error deleting file:', err);
-        } else {
-          console.log('File deleted successfully');
-        }
-      });
-  
-      res.status(200).json({ message: 'Data saved successfully' });
-   } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: 'Server error' });
-   }
-  });
+  try {
+    // Convert the uploaded file to Base64
+    const photoBase64 = fs.readFileSync(req.file.path, 'base64');
+
+    const newUser = new User({
+      uid: req.body.uid, // Add this line
+      username: req.body.username,
+      photo: photoBase64, // Store the Base64 string
+    });
+
+    await newUser.save();
+
+    // Delete the file after it's converted to Base64 and saved to the database
+    fs.unlink(req.file.path, (err) => {
+      if (err) {
+        console.error('Error deleting file:', err);
+      } else {
+        console.log('File deleted successfully');
+      }
+    });
+
+    res.status(200).json({ message: 'Data saved successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

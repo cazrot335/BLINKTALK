@@ -1,18 +1,101 @@
 import React, { useState } from 'react';
+import styled from 'styled-components';
+import Profile from '../assests/profile.jpg'; // Ensure the path is correct
+import { useNavigate } from 'react-router-dom';
+import { auth } from './authConfig'; // Import the auth object from Firebase
+
+
+// Styled components
+const UserEditContainer = styled.div`
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+ padding: 20px;
+`;
+
+const UserEditForm = styled.form`
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+ width: 100%;
+ max-width: 400px;
+`;
+
+const ProfilePictureContainer = styled.div`
+ position: relative;
+ width: 150px;
+ height: 150px;
+ border-radius: 50%;
+ overflow: hidden;
+ margin-bottom: 20px;
+`;
+
+const ProfilePicture = styled.img`
+ width: 100%;
+ height: 100%;
+ object-fit: cover;
+ border-radius: 50%;
+`;
+
+const ProfilePictureLabel = styled.label`
+ position: absolute;
+ top: 0;
+ left: 0;
+ width: 100%;
+ height: 100%;
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ background-color: rgba(0, 0, 0, 0.5);
+ color: white;
+ opacity: 0;
+ cursor: pointer;
+ transition: opacity 0.3s;
+`;
+
+const ProfilePictureInput = styled.input`
+ display: none;
+`;
+
+const UsernameInput = styled.input`
+ width: 100%;
+ padding: 10px;
+ margin-bottom: 20px;
+ border: 1px solid #ccc;
+ border-radius: 4px;
+`;
+
+const SetProfileButton = styled.button`
+ padding: 10px 20px;
+ background-color: #007bff;
+ color: white;
+ border: none;
+ border-radius: 4px;
+ cursor: pointer;
+`;
 
 function UserEdit() {
- const [username, setUsername] = useState('');
- const [photo, setPhoto] = useState(null);
+  const navigate = useNavigate();
+  const [username, setUsername] = useState('');
+  const [photo, setPhoto] = useState(null);
 
- const handleSubmit = async (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const formData = new FormData();
     formData.append('username', username);
-    formData.append('photo', photo);
+    if (photo) {
+      formData.append('photo', photo);
+    }
+
+    // Get the currently logged-in user
+    const user = auth.currentUser;
 
     try {
       const response = await fetch('http://localhost:5000/updateUser', {
         method: 'POST',
+        headers: {
+          'uid': user.uid, // Include the Firebase UID in the headers
+        },
         body: formData,
       });
 
@@ -20,30 +103,34 @@ function UserEdit() {
         throw new Error('Network response was not ok');
       }
 
-      alert('User updated successfully.');
+      navigate('/Main'); // Add this line
     } catch (error) {
       console.error('Error updating user:', error);
-      alert('Failed to update user.');
     }
- };
+  };
 
  return (
-    <div>
-      <h1>User Edit</h1>
-      <form onSubmit={handleSubmit}>
-        <label>
+    <UserEditContainer>
+      <h1>Edit Profile</h1>
+      <UserEditForm onSubmit={handleSubmit}>
+        <ProfilePictureContainer>
+          <ProfilePicture src={photo ? URL.createObjectURL(photo) : Profile} alt="Profile" />
+          <ProfilePictureLabel htmlFor="photo">Tap to add picture</ProfilePictureLabel>
+          <ProfilePictureInput id="photo" name="photo" type="file" onChange={(e) => setPhoto(e.target.files[0])} />
+        </ProfilePictureContainer>
+        <label htmlFor="username">
           Username:
-          <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
+          <UsernameInput id="username" name="username" value={username} onChange={(e) => setUsername(e.target.value)} />
         </label>
-        <label>
-          Photo:
-          <input type="file" onChange={(e) => setPhoto(e.target.files[0])} />
-        </label>
-        <button type="submit">Update</button>
-      </form>
-    </div>
+        <SetProfileButton type="submit">Set Profile</SetProfileButton>
+      </UserEditForm>
+    </UserEditContainer>
  );
 }
 
 export default UserEdit;
+
+
+
+
 
