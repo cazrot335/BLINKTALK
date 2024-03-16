@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithGoogle } from 'backend/authConfig';
+import { useNavigate } from 'react-router-dom';
 
 // Styled Components for Toggle Button
 const ToggleButton = styled.button`
@@ -84,6 +85,7 @@ const MiddleContent = styled.div`
 `;
 
 const AuthenticationPage = () => {
+  const navigate = useNavigate();
  const [isLogin, setIsLogin] = useState(true);
  const [email, setEmail] = useState('');
  const [password, setPassword] = useState('');
@@ -93,38 +95,39 @@ const AuthenticationPage = () => {
  };
 
  const handleFormSubmit = async (event) => {
-    event.preventDefault();
-    try {
-      if (isLogin) {
-        // Sign in the user
-        const userCredential = await signInWithEmailAndPassword(auth, email, password);
-        // Signed in
-        const user = userCredential.user;
-        // ...
-      } else {
-        // Create a new user
-        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-        // Signed in 
-        const user = userCredential.user;
-        // ...
-      }
-    } catch (error) {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      // ..
+  event.preventDefault();
+  try {
+    let userCredential;
+    if (isLogin) {
+      // Sign in the user
+      userCredential = await signInWithEmailAndPassword(auth, email, password);
+    } else {
+      // Create a new user
+      userCredential = await createUserWithEmailAndPassword(auth, email, password);
     }
- };
+    // Signed in 
+    const user = userCredential.user;
+    // Navigate to /user
+    navigate('/user');
+  } catch (error) {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    // ..
+  }
+};
 
- const handleGoogleSignIn = async () => {
-    try {
-      const result = await signInWithGoogle();
-      // Handle sign-in result...
-      console.log(result);
-    } catch (error) {
-      // Handle errors...
-      console.error(error);
-    }
- };
+const handleGoogleSignIn = async () => {
+  try {
+    const result = await signInWithGoogle();
+    // Handle sign-in result...
+    console.log(result);
+    // Navigate to /user
+    navigate('/user');
+  } catch (error) {
+    // Handle errors...
+    console.error(error);
+  }
+};
 
  return (
     <CenteredContainer>
