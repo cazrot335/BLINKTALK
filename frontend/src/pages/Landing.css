@@ -56,21 +56,32 @@
   flex-direction: column;
   margin-top: 200px;
   background-color: #a2cbef;
-  height: 1000px;
+  height: min-content;
+  padding-bottom: 50px;
 }
 
 .about h1,
 .about p {
   margin: 20px 60px 0;
   align-self: center;
+  display: flex;
+  flex-direction: column;
 }
 
+.about p h3 {
+  margin-top: 30px;
+  align-self: center;
+}
+
+.about p h5 {
+  align-self: center;
+}
 .about h1 {
   margin-top: 40px;
   color: #6d3b37;
 }
 .about p {
-  font-size: 20px;
+  font-size: 23px;
 }
 @keyframes fade {
   from {
@@ -95,4 +106,37 @@
   .content button {
     align-self: center;
   }
+}
+.footer {
+  display: flex;
+  justify-content: space-between;
+  height: min-content;
+  padding-top: 40px;
+  padding-bottom: 30px;
+}
+
+.text h1 {
+  margin-top: 30px;
+  margin-left: 60px;
+  font-size: 35px;
+  font-weight: 600;
+  color: #0889fc;
+  cursor: pointer;
+}
+
+.footer-content {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  justify-content: space-between;
+}
+.icon {
+  display: flex;
+}
+.fa-github {
+  margin-top: 30px;
+  color: white;
+  font-size: 50px;
+  cursor: pointer;
+  margin-left: 25px;
 }
