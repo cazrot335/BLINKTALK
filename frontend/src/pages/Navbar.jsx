@@ -17,7 +17,6 @@ function Navbar(){
             </div>
             <div className="header-right">
                 <ul>
-                    <li>Home</li>
                     <li onClick={about}>About us</li>
                     <NavLink className='navlink' to='/authentication'><li>Login</li></NavLink>
                 </ul>
