@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithGoogle } from 'backend/authConfig';
+import { auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithGoogle } from './authConfig'
 import { useNavigate } from 'react-router-dom';
 
 // Styled Components for Toggle Button
