@@ -1,5 +1,5 @@
 import React from "react";
-import Navbar from "./Navbar";
+import Navbar from "../components/Navbar.jsx";
 import styled, { keyframes } from "styled-components";
 import top from "../assests/top-landing.jpg";
 import { useNavigate } from "react-router-dom";

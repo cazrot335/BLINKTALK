@@ -11,8 +11,7 @@ if (!fs.existsSync('uploads')) {
   fs.mkdirSync('uploads');
 }
 
-
-mongoose.connect('mongodb+srv://cazrot335:P%40rth990@cluster0.cvo20js.mongodb.net/BLINKTALK?retryWrites=true&w=majority');
+mongoose.connect('mongodb+srv://cazrot335:parth990@cluster0.cvo20js.mongodb.net/BLINKTALK?retryWrites=true&w=majority');
 
 const db = mongoose.connection;
 

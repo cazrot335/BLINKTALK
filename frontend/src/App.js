@@ -1,7 +1,7 @@
 import { BrowserRouter , Route,Routes } from 'react-router-dom';
 import React from 'react';
 import './App.css';
-import Navbar from './pages/Navbar.jsx';
+
 import Landing from './pages/Landing.jsx';
 import Authentication from './pages/Authentication.jsx';
 import UserEdit from './pages/userEdit.jsx';
