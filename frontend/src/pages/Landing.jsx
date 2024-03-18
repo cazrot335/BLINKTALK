@@ -138,31 +138,25 @@ const Text = styled.div`
   }
   `;
   
-  const Footer = styled.div`
+ const Footer = styled.div`
   display: flex;
   justify-content: space-between;
   height: min-content;
   padding-top: 40px;
   padding-bottom: 30px;
   font-family: 'Poppins';
-  align-items: center;
-  `;
-  
-  const FooterContent = styled.div`
+`;
+
+const FooterContent = styled.div`
   display: flex;
-  align-items: center;
-  margin-bottom: 20px;
-  justify-content: space-between;
   font-family: 'Poppins';
-  
-  `;
+`;
   
   const Icon = styled.div`
   display: flex;
   `;
   
   const GithubIcon = styled.i`
-  margin-top: 30px;
   color: white;
   font-size: 50px;
   cursor: pointer;
@@ -188,7 +182,7 @@ const LandingPage = () => {
       <Home>
         <Hero>
           <Content>
-            <h1>Welcome to ChatApp</h1>
+            <h1>Welcome to BlinkTalk</h1>
             <h5>Connect, Communicate, and Collaborate...</h5>
             <button onClick={handleGetStarted}>Get Started</button>
           </Content>
@@ -198,7 +192,7 @@ const LandingPage = () => {
         </Hero>
 
         <About>
-          <h1>About ChatApp</h1>
+          <h1>About BlinkTalk</h1>
           <p>
             BlinkTalk is designed to bring people together through instant
             messaging. Our platform is easy to use and offers a secure
@@ -226,20 +220,12 @@ const LandingPage = () => {
         </About>
 
         <Footer>
-          <FooterContent>
-            <Text>
-              <h1 onClick={scrollTop}>BlinkTalk</h1>
-            </Text>
-            <Icon>
-              <a 
-              href="https://github.com/cazrot335/BLINKTALK"
-              target="_blank"
-              >
-                <GithubIcon className="fa-brands fa-github"></GithubIcon>
-              </a>
-            </Icon>
-          </FooterContent>
-        </Footer>
+  <FooterContent style={{ display: 'flex', alignItems: 'center' }}>
+    <Text>
+      <h1 onClick={scrollTop}>BlinkTalk</h1>
+    </Text>
+  </FooterContent>
+</Footer>
       </Home>
     </>
   );
