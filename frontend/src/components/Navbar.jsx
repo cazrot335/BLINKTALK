@@ -18,17 +18,25 @@ const Header = styled.div`
 
 const HeaderLeft = styled.div`
  display: flex;
+ align-items: center;
 `;
 
 const Logo = styled.img`
  height: 60px;
  margin-left: 30px;
+ @media (max-width: 768px) {
+   margin-left: 10px;
+  height: 40px;
+}
 `;
 
 const Title = styled.h1`
  margin-left: 10px;
  color: #0889fc;
  text-shadow: 0px 0px 15px #0889fc;
+ @media (max-width: 768px) {
+  font-size: 20px;
+}
 `;
 
 const HeaderRight = styled.div`
@@ -73,23 +81,43 @@ const DropdownButton = styled.button`
 
 // DropdownContent should be shown only when dropdownOpen is true
 const DropdownContent = styled.div`
- display: none;
+ display: ${({ isOpen }) => (isOpen ? 'block' : 'none')};
  position: absolute;
+ right: 0;
+ padding-top: 60px;
+ padding-bottom: 30px;
+ top: 0;
  background-color: #f9f9f9;
- min-width: 160px;
+ width: 100%;
  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
  z-index: 1;
- @media (max-width: 768px) {
-    display: ${({ isOpen }) => (isOpen ? 'block' : 'none')};
- }
 `;
 
 // DropdownItem styling remains the same
 const DropdownItem = styled.li`
+ list-style: none;
+ color: black;
  padding: 12px 16px;
  &:hover {
     background-color: #ddd;
  }
+`;
+
+const Icon = styled.i`
+ color: white;
+ font-size: 35px;
+`;
+
+// Close button for the dropdown menu
+const CloseButton = styled.button`
+ position: absolute;
+ top: 20px;
+ right: 10px;
+ background-color: transparent;
+ border: none;
+ color: #0889fc;
+ font-size: 20px;
+ cursor: pointer;
 `;
 
 function Navbar() {
@@ -115,9 +143,10 @@ function Navbar() {
             </NavLinkStyled>
           </NavList>
           <DropdownButton onClick={() => setDropdownOpen(!dropdownOpen)}>
-            Menu
+            <Icon><i className="fa-solid fa-bars"></i></Icon>
           </DropdownButton>
           <DropdownContent isOpen={dropdownOpen}>
+            <CloseButton onClick={() => setDropdownOpen(false)}><i class="fa-solid fa-xmark"></i></CloseButton>
             <DropdownItem onClick={about}>About us</DropdownItem>
             <NavLinkStyled to="/authentication">
               <DropdownItem>Login</DropdownItem>
