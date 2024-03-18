@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithGoogle } from './authConfig'
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithCredential, GoogleAuthProvider, getAdditionalUserInfo } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
+import { auth, signInWithGoogle } from './authConfig';
 
 // Styled Components for Toggle Button
 const ToggleButton = styled.button`
@@ -97,37 +98,63 @@ const AuthenticationPage = () => {
  const handleFormSubmit = async (event) => {
   event.preventDefault();
   try {
-    let userCredential;
-    if (isLogin) {
-      // Sign in the user
-      userCredential = await signInWithEmailAndPassword(auth, email, password);
-    } else {
-      // Create a new user
-      userCredential = await createUserWithEmailAndPassword(auth, email, password);
-    }
-    // Signed in 
-    const user = userCredential.user;
-    // Navigate to /user
-    navigate('/user');
+     let userCredential;
+     let authMethod = 'Email'; // Default to Email
+     if (isLogin) {
+       userCredential = await signInWithEmailAndPassword(auth, email, password);
+     } else {
+       userCredential = await createUserWithEmailAndPassword(auth, email, password);
+     }
+     // Use getAdditionalUserInfo to safely access additionalUserInfo
+     const additionalUserInfo = getAdditionalUserInfo(userCredential);
+     if (additionalUserInfo && additionalUserInfo.providerId === 'google.com') {
+       authMethod = 'Google';
+     }
+     const user = userCredential.user;
+     // Send the authentication method to the backend
+     await fetch('http://localhost:5000/updateUser', {
+       method: 'POST',
+       headers: {
+         'Content-Type': 'application/json',
+       },
+       body: JSON.stringify({
+         uid: user.uid,
+         username: user.displayName,
+         photo: user.photoURL,
+         authMethod: authMethod, // Include the authentication method
+       }),
+     });
+     navigate('/user');
   } catch (error) {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    // ..
+     console.error(error);
   }
-};
+ };
+ 
+ 
 
 const handleGoogleSignIn = async () => {
   try {
-    const result = await signInWithGoogle();
-    // Handle sign-in result...
-    console.log(result);
-    // Navigate to /user
-    navigate('/user');
+     const result = await signInWithGoogle();
+     const user = result.user;
+     // Send the authentication method to the backend
+     await fetch('http://localhost:5000/updateUser', {
+       method: 'POST',
+       headers: {
+         'Content-Type': 'application/json',
+       },
+       body: JSON.stringify({
+         uid: user.uid,
+         username: user.displayName,
+         photo: user.photoURL,
+         authMethod: 'Google', // Directly set authMethod to 'Google' for Google Sign-In
+       }),
+     });
+     navigate('/user');
   } catch (error) {
-    // Handle errors...
-    console.error(error);
+     console.error(error);
   }
-};
+ };
+ 
 
  return (
     <CenteredContainer>
