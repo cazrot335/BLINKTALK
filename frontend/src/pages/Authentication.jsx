@@ -15,7 +15,7 @@ const ToggleText = styled.p`
 `;
 
 const ToggleButton = styled.span`
-  color: #007bff;
+  color: #993731;
   cursor: pointer;
   &:hover {
     text-decoration: underline;
@@ -44,14 +44,14 @@ const FormInput = styled.input`
 const FormButton = styled.button`
   width: 100%;
   padding: 10px;
-  background-color: #007bff;
+  background-color: #b0433c;
   color: #fff;
   border: none;
   border-radius: 4px;
   cursor: pointer;
   font-family: "Poppins";
   &:hover {
-    background-color: #0056b3;
+    background-color: #993731;
   }
 `;
 
