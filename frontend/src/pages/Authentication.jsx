@@ -84,9 +84,8 @@ const MiddleContent = styled.div`
  border-radius: 8px; // Add a border radius
  padding: 20px; // Add some padding
 `;
-
-const AuthenticationPage = () => {
-  const navigate = useNavigate();
+function AuthenticationPage() {
+ const navigate = useNavigate();
  const [isLogin, setIsLogin] = useState(true);
  const [email, setEmail] = useState('');
  const [password, setPassword] = useState('');
@@ -105,51 +104,71 @@ const AuthenticationPage = () => {
      } else {
        userCredential = await createUserWithEmailAndPassword(auth, email, password);
      }
-     // Use getAdditionalUserInfo to safely access additionalUserInfo
      const additionalUserInfo = getAdditionalUserInfo(userCredential);
      if (additionalUserInfo && additionalUserInfo.providerId === 'google.com') {
        authMethod = 'Google';
      }
      const user = userCredential.user;
-     // Send the authentication method to the backend
-     await fetch('http://localhost:5000/updateUser', {
-       method: 'POST',
+ 
+     // Prepare the request body
+     const requestBody = {
+       email: user.email, // Include the email in the request body
+       username: user.displayName,
+       photo: user.photoURL,
+       authMethod: authMethod,
+     };
+ 
+     // Send the request to update the user
+     const response = await fetch('http://localhost:5000/updateUser', {
+       method: 'POST', // Use POST since your endpoint is designed for creating or updating users
        headers: {
          'Content-Type': 'application/json',
        },
-       body: JSON.stringify({
-         uid: user.uid,
-         username: user.displayName,
-         photo: user.photoURL,
-         authMethod: authMethod, // Include the authentication method
-       }),
+       body: JSON.stringify(requestBody),
      });
+ 
+     if (!response.ok) {
+       throw new Error('Network response was not ok');
+     }
+ 
      navigate('/user');
+     console.log(user.uid);
+     console.log(user);
   } catch (error) {
      console.error(error);
   }
  };
  
- 
 
-const handleGoogleSignIn = async () => {
+ const handleGoogleSignIn = async () => {
   try {
      const result = await signInWithGoogle();
      const user = result.user;
-     // Send the authentication method to the backend
-     await fetch('http://localhost:5000/updateUser', {
-       method: 'POST',
+ 
+     // Prepare the request body
+     const requestBody = {
+       email: user.email, // Include the email in the request body
+       username: user.displayName,
+       photo: user.photoURL,
+       authMethod: 'Google',
+     };
+ 
+     // Send the request to update the user
+     const response = await fetch('http://localhost:5000/updateUser', {
+       method: 'POST', // Use POST since your endpoint is designed for creating or updating users
        headers: {
          'Content-Type': 'application/json',
        },
-       body: JSON.stringify({
-         uid: user.uid,
-         username: user.displayName,
-         photo: user.photoURL,
-         authMethod: 'Google', // Directly set authMethod to 'Google' for Google Sign-In
-       }),
+       body: JSON.stringify(requestBody),
      });
+ 
+     if (!response.ok) {
+       throw new Error('Network response was not ok');
+     }
+ 
      navigate('/user');
+     console.log(user.uid);
+     console.log(user);
   } catch (error) {
      console.error(error);
   }
@@ -177,7 +196,7 @@ const handleGoogleSignIn = async () => {
       </MiddleContent>
     </CenteredContainer>
  );
-};
+}
 
 export default AuthenticationPage;
 

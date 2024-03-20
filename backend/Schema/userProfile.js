@@ -7,13 +7,14 @@ const providerSchema = new mongoose.Schema({
 });
 
 const UserSchema = new mongoose.Schema({
- uid: String,
- username: String,
- photo: String,
- providers: [providerSchema],
- created_at: Date,
- updated_at: Date
-});
+    email: { type: String, unique: true },
+    username: String,
+    photo: String,
+    providers: [providerSchema],
+    created_at: Date,
+    updated_at: Date
+   });
+   
 
 module.exports = UserSchema;
 
