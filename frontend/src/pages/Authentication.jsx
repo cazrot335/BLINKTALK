@@ -120,7 +120,7 @@ const AuthenticationPage = () => {
         );
       }
       const user = userCredential.user;
-      navigate("/user");
+      navigate("/authentication/user");
     } catch (error) {
       console.error(error);
     }
@@ -130,7 +130,7 @@ const AuthenticationPage = () => {
     try {
       const result = await signInWithGoogle();
       console.log(result);
-      navigate("/user");
+      navigate("/authentication/user");
     } catch (error) {
       console.error(error);
     }
