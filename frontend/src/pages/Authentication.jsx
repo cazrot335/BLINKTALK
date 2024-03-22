@@ -116,11 +116,8 @@ const AuthenticationPage = () => {
    
        // Prepare the request body
        const requestBody = {
-         email: user.email, // Include the email in the request body
-         username: user.displayName,
-         photo: user.photoURL,
-         authMethod: authMethod,
-       };
+        email: user.email, // Only include the email in the request body
+      };
    
        // Send the request to update the user
        const response = await fetch('http://localhost:5000/updateUser', {
@@ -151,11 +148,8 @@ const AuthenticationPage = () => {
    
        // Prepare the request body
        const requestBody = {
-         email: user.email, // Include the email in the request body
-         username: user.displayName,
-         photo: user.photoURL,
-         authMethod: 'Google',
-       };
+        email: user.email, // Only include the email in the request body
+      };
    
        // Send the request to update the user
        const response = await fetch('http://localhost:5000/updateUser', {

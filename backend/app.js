@@ -19,7 +19,7 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 db.once('open', function() {
   console.log('MongoDB database connection established successfully');
 });
-
+const Message = require('./Schema/messages');
 
 // Define a Mongoose schema for your data
 const UserSchema = require('./Schema/userProfile');
@@ -92,6 +92,22 @@ app.post('/updateUser', upload.single('photo'), async (req, res) => {
     }
 
     res.status(200).json({ message: 'Data saved successfully', user });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+app.post('/messages', async (req, res) => {
+  try {
+    const newMessage = new Message({
+      sender: req.body.sender,
+      receiver: req.body.receiver,
+      message: req.body.message,
+      timestamp: new Date()
+    });
+    await newMessage.save();
+    res.status(200).json(newMessage);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Server error' });

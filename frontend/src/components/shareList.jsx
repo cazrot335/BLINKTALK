@@ -19,7 +19,7 @@ const Username = styled.p`
   margin: 0;
 `;
 
-const ShareList = () => {
+const ShareList = ({ onSelectUser }) => {
  const [users, setUsers] = useState([]);
 
  useEffect(() => {
@@ -31,14 +31,14 @@ const ShareList = () => {
  }, []);
 
  return (
-    <div>
-    {users.map(user => (
-      <User key={user._id}>
-        <ProfilePic src={`data:image/jpeg;base64,${user.photo}`} alt={user.username} />
-        <Username>{user.username}</Username>
-      </User>
-    ))}
-  </div>
+  <div>
+      {users.map(user => (
+        <User key={user._id} onClick={() => onSelectUser(user)}> {/* Call the callback when a user is clicked */}
+          <ProfilePic src={`data:image/jpeg;base64,${user.photo}`} alt={user.username} />
+          <Username>{user.username}</Username>
+        </User>
+      ))}
+    </div>
  );
 };
 
