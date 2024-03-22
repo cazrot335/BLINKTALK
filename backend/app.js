@@ -4,6 +4,8 @@ const cors = require('cors');
 const multer = require('multer');
 const mongoose = require('mongoose');
 const fs = require('fs');
+const http = require('http');
+const io = require('socket.io');
 
 // Check if the uploads directory exists
 if (!fs.existsSync('uploads')) {
@@ -26,6 +28,42 @@ const UserSchema = require('./Schema/userProfile');
 const User = mongoose.model('User', UserSchema);
 
 const app = express();
+
+// Set up the server to use Socket.IO
+const server = http.createServer(app);
+const socketServer = io(server, {
+  cors: {
+    origin: "http://localhost:3000",
+    methods: ["GET", "POST"],
+    allowedHeaders: ["my-custom-header"],
+    credentials: true
+  }
+});
+
+socketServer.on('connection', (socket) => {
+  console.log('A user connected');
+
+  socket.on('new_message', async (message) => {
+    try {
+      const newMessage = new Message({
+        sender: message.sender,
+        receiver: message.receiver,
+        message: message.message,
+        timestamp: new Date()
+      });
+      await newMessage.save();
+  
+      // Broadcast the new message to all connected clients
+      socketServer.emit('new_message', newMessage);
+    } catch (error) {
+      console.error(error);
+    }
+  });
+
+  socket.on('disconnect', () => {
+    console.log('A user disconnected');
+  });
+});
 app.use(cors());
 app.use(express.json());
 
@@ -118,5 +156,5 @@ app.post('/messages', async (req, res) => {
  
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
