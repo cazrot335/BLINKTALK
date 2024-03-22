@@ -56,54 +56,47 @@ app.get('/users', async (req, res) => {
 // Endpoint to handle form submission or user profile update
 app.post('/updateUser', upload.single('photo'), async (req, res) => {
   try {
-     // Convert the uploaded file to Base64
-     const photoBase64 = req.file ? fs.readFileSync(req.file.path, 'base64') : null;
- 
-     // Check if a user document exists with the given email
-     const existingUser = await User.findOne({ email: req.body.email });
- 
-     let user;
-     if (existingUser) {
-       // If the user exists, update the document
-       user = await User.findOneAndUpdate(
-         { email: req.body.email },
-         {
-           username: req.body.username,
-           photo: photoBase64 || existingUser.photo, // Use the existing photo if no new photo is uploaded
-           updated_at: new Date(),
-         },
-         { new: true } // Return the updated document
-       );
-     } else {
-       // If the user does not exist, create a new document
-       user = new User({
-         email: req.body.email,
-         username: req.body.username,
-         photo: photoBase64,
-         providers: [{ provider: req.body.authMethod }],
-         created_at: new Date(),
-         updated_at: new Date(),
-       });
-       await user.save();
-     }
- 
-     // Delete the file after it's converted to Base64 and saved to the database
-     if (req.file) {
-       fs.unlink(req.file.path, (err) => {
-         if (err) {
-           console.error('Error deleting file:', err);
-         } else {
-           console.log('File deleted successfully');
-         }
-       });
-     }
- 
-     res.status(200).json({ message: 'Data saved successfully', user });
+    // Convert the uploaded file to Base64
+    const photoBase64 = req.file ? fs.readFileSync(req.file.path, 'base64') : null;
+
+    // Check if a user document exists with the given email
+    let user = await User.findOne({ email: req.body.email });
+
+    if (!user) {
+      // If the user doesn't exist, create a new document
+      user = new User({
+        email: req.body.email,
+        username: req.body.username,
+        photo: photoBase64,
+        updated_at: new Date(),
+      });
+    } else {
+      // If the user exists, update the document
+      user.username = req.body.username;
+      user.photo = photoBase64 || user.photo;
+      user.updated_at = new Date();
+    }
+
+    // Save the user document
+    await user.save();
+
+    // Delete the file after it's converted to Base64 and saved to the database
+    if (req.file) {
+      fs.unlink(req.file.path, (err) => {
+        if (err) {
+          console.error('Error deleting file:', err);
+        } else {
+          console.log('File deleted successfully');
+        }
+      });
+    }
+
+    res.status(200).json({ message: 'Data saved successfully', user });
   } catch (error) {
-     console.error(error);
-     res.status(500).json({ message: 'Server error' });
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
   }
- });
+});
  
  
  

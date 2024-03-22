@@ -84,31 +84,31 @@ function UserEdit() {
     const formData = new FormData();
     formData.append('username', username);
     if (photo) {
-       formData.append('photo', photo); // Append the photo file directly
+      formData.append('photo', photo); // Append the photo file directly
     }
-   
+  
     // Get the currently logged-in user
     const user = auth.currentUser;
-   
+  
+    // Add the email to the FormData
+    formData.append('email', user.email);
+    
     try {
-       // Send the request to update the user
-       const response = await fetch('http://localhost:5000/updateUser', {
-         method: 'POST',
-         body: formData, // Use FormData to send the file
-       });
-   
-       if (!response.ok) {
-         throw new Error('Network response was not ok');
-       }
-   
-       navigate('/Main'); // Redirect to the main page after successful update
+      // Send the request to update the user
+      const response = await fetch('http://localhost:5000/updateUser', {
+        method: 'POST',
+        body: formData, // Use FormData to send the file
+      });
+  
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+  
+      navigate('/Main'); // Redirect to the main page after successful update
     } catch (error) {
-       console.error('Error updating user:', error);
+      console.error('Error updating user:', error);
     }
-   };
-   
-   
-   
+  };
  
   return (
      <UserEditContainer>
