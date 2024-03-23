@@ -7,71 +7,84 @@ import { auth } from './authConfig'; // Import the auth object from Firebase
 
 // Styled components
 const UserEditContainer = styled.div`
- display: flex;
- flex-direction: column;
- align-items: center;
- padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background-color: #a2cbef;
+  height: 663px;
+  font-family: "Poppins";
+  color: rgb(6, 19, 50);
 `;
 
 const UserEditForm = styled.form`
- display: flex;
- flex-direction: column;
- align-items: center;
- width: 100%;
- max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 400px;
 `;
 
 const ProfilePictureContainer = styled.div`
- position: relative;
- width: 150px;
- height: 150px;
- border-radius: 50%;
- overflow: hidden;
- margin-bottom: 20px;
+  position: relative;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-bottom: 20px;
 `;
 
 const ProfilePicture = styled.img`
- width: 100%;
- height: 100%;
- object-fit: cover;
- border-radius: 50%;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
 `;
 
 const ProfilePictureLabel = styled.label`
- position: absolute;
- top: 0;
- left: 0;
- width: 100%;
- height: 100%;
- display: flex;
- justify-content: center;
- align-items: center;
- background-color: rgba(0, 0, 0, 0.5);
- color: white;
- opacity: 0;
- cursor: pointer;
- transition: opacity 0.3s;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  opacity: 0;
+  cursor: pointer;
+  transition: opacity 0.3s;
 `;
 
 const ProfilePictureInput = styled.input`
- display: none;
+  display: none;
 `;
 
 const UsernameInput = styled.input`
- width: 100%;
- padding: 10px;
- margin-bottom: 20px;
- border: 1px solid #ccc;
- border-radius: 4px;
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 7px;
+  outline: none;
+  font-family: 'Poppins';
 `;
 
 const SetProfileButton = styled.button`
- padding: 10px 20px;
- background-color: #007bff;
- color: white;
- border: none;
- border-radius: 4px;
- cursor: pointer;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: "Poppins";
+  background-color: #b0433c;
+
+  &:hover {
+    background-color: #993731;
+  }
 `;
 
 function UserEdit() {
