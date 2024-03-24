@@ -8,7 +8,7 @@ import GlobalStyles from '../GlobalStyles';
 // Define the styled components
 const Header = styled.div`
  display: flex;
- background-color: rgb(6, 19, 50);
+ background-color: #0e2235;
  height: min-content;
  justify-content: space-between;
  color: white;
@@ -33,7 +33,7 @@ const Logo = styled.img`
 const Title = styled.h1`
  margin-left: 10px;
  color: #0889fc;
- text-shadow: 0px 0px 15px #0889fc;
+ text-shadow: 0px 0px 17px #0889fc;
  @media (max-width: 768px) {
   font-size: 20px;
 }

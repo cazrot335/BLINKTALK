@@ -7,8 +7,8 @@ import { animateScroll as scroll } from "react-scroll";
 
 const Home = styled.div`
   height: min-content;
-  background-color: rgb(6, 19, 50);
-  font-family: 'Poppins';
+  background-color: #0e2235;
+  font-family: "Poppins";
 `;
 
 const Hero = styled.div`
@@ -27,16 +27,16 @@ const Content = styled.div`
   justify-content: center;
   margin-left: 60px;
   margin-top: 100px;
-  
-  h1{
+
+  h1 {
     color: #ad6661;
     font-size: 50px;
   }
-  h5{
+  h5 {
     color: white;
     font-size: 22px;
   }
-  
+
   button {
     padding: 15px;
     border-radius: 7px;
@@ -53,29 +53,29 @@ const Content = styled.div`
       box-shadow: 0px 0px 15px #0889fc;
     }
   }
-  
-  @media only screen and (max-width: 721px){
-    h1{
+
+  @media only screen and (max-width: 721px) {
+    h1 {
       font-size: 30px;
     }
-    h5{
+    h5 {
       font-size: 15px;
     }
-    button{
+    button {
       align-self: center;
     }
     margin-left: 30px;
   }
-  `;
-  
-  const HeroImg = styled.div`
+`;
+
+const HeroImg = styled.div`
   img {
     height: 400px;
     object-fit: contain;
   }
 
-  @media only screen and (max-width: 721px){
-    img{
+  @media only screen and (max-width: 721px) {
+    img {
       height: 200px;
     }
   }
@@ -89,7 +89,7 @@ const About = styled.div`
   background-color: #a2cbef;
   height: min-content;
   padding-bottom: 50px;
-  
+
   h1 {
     margin-left: 30px;
     margin-right: 30px;
@@ -97,7 +97,7 @@ const About = styled.div`
     color: #6d3b37;
     align-self: center;
   }
-  
+
   p {
     text-align: center;
     margin-top: 20px;
@@ -107,12 +107,13 @@ const About = styled.div`
     margin-bottom: 20px;
   }
 
-  h3, h5 {
+  h3,
+  h5 {
     font-size: 25px;
     align-self: center;
   }
 
-  @media only screen and (max-width: 721px){
+  @media only screen and (max-width: 721px) {
     p {
       margin-left: 30px;
       margin-right: 30px;
@@ -129,40 +130,40 @@ const Text = styled.div`
     color: #0889fc;
     cursor: pointer;
   }
-  
-  @media only screen and (max-width: 721px){
-    h1{
+
+  @media only screen and (max-width: 721px) {
+    h1 {
       font-size: 25px;
       margin-left: 30px;
     }
   }
-  `;
-  
- const Footer = styled.div`
+`;
+
+const Footer = styled.div`
   display: flex;
   justify-content: space-between;
   height: min-content;
   padding-top: 40px;
   padding-bottom: 30px;
-  font-family: 'Poppins';
+  font-family: "Poppins";
 `;
 
 const FooterContent = styled.div`
   display: flex;
-  font-family: 'Poppins';
+  font-family: "Poppins";
 `;
-  
-  const Icon = styled.div`
+
+const Icon = styled.div`
   display: flex;
-  `;
-  
-  const GithubIcon = styled.i`
+`;
+
+const GithubIcon = styled.i`
   color: white;
   font-size: 50px;
   cursor: pointer;
   margin-left: 25px;
-  
-  @media only screen and (max-width: 721px){
+
+  @media only screen and (max-width: 721px) {
     margin-left: 10px;
     font-size: 25px;
   }
@@ -173,7 +174,7 @@ const LandingPage = () => {
   const handleGetStarted = () => {
     navigate("/authentication");
   };
-  function scrollTop(){
+  function scrollTop() {
     scroll.scrollToTop();
   }
   return (
@@ -220,12 +221,12 @@ const LandingPage = () => {
         </About>
 
         <Footer>
-  <FooterContent style={{ display: 'flex', alignItems: 'center' }}>
-    <Text>
-      <h1 onClick={scrollTop}>BlinkTalk</h1>
-    </Text>
-  </FooterContent>
-</Footer>
+          <FooterContent style={{ display: "flex", alignItems: "center" }}>
+            <Text>
+              <h1 onClick={scrollTop}>BlinkTalk</h1>
+            </Text>
+          </FooterContent>
+        </Footer>
       </Home>
     </>
   );

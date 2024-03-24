@@ -1,8 +1,12 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import {  signInWithEmailAndPassword, createUserWithEmailAndPassword,  getAdditionalUserInfo } from 'firebase/auth';
-import { useNavigate } from 'react-router-dom';
-import { auth, signInWithGoogle } from './authConfig';
+import React, { useState } from "react";
+import styled from "styled-components";
+import {
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  getAdditionalUserInfo,
+} from "firebase/auth";
+import { useNavigate } from "react-router-dom";
+import { auth, signInWithGoogle } from "./authConfig";
 
 const ToggleText = styled.p`
   color: #000;
@@ -52,19 +56,17 @@ const FormButton = styled.button`
 `;
 
 const SocialButton = styled.button`
-  background-color: #fff;
-  color: #000;
+  background-color: #000;
+  color: #fff;
   border: 1px solid #000;
   padding: 10px;
+  padding-left: 40px;
+  padding-right: 40px;
   cursor: pointer;
   margin-right: 10px;
   margin-top: 10px;
   border-radius: 10px;
   font-family: "Poppins";
-  &:hover {
-    background-color: #000;
-    color: #fff;
-  }
 `;
 
 const CenteredContainer = styled.div`
@@ -73,7 +75,7 @@ const CenteredContainer = styled.div`
   align-items: center;
   font-family: "Poppins";
   height: 100vh;
-  background-color: #061332;
+  background-color: #0e2235;
   padding: 20px;
   gap: 20px;
 `;
@@ -101,76 +103,86 @@ const AuthenticationPage = () => {
   const handleFormSubmit = async (event) => {
     event.preventDefault();
     try {
-       let userCredential;
-       let authMethod = 'Email'; // Default to Email
-       if (isLogin) {
-         userCredential = await signInWithEmailAndPassword(auth, email, password);
-       } else {
-         userCredential = await createUserWithEmailAndPassword(auth, email, password);
-       }
-       const additionalUserInfo = getAdditionalUserInfo(userCredential);
-       if (additionalUserInfo && additionalUserInfo.providerId === 'google.com') {
-         authMethod = 'Google';
-       }
-       const user = userCredential.user;
-   
-       // Prepare the request body
-       const requestBody = {
+      let userCredential;
+      let authMethod = "Email"; // Default to Email
+      if (isLogin) {
+        userCredential = await signInWithEmailAndPassword(
+          auth,
+          email,
+          password
+        );
+      } else {
+        userCredential = await createUserWithEmailAndPassword(
+          auth,
+          email,
+          password
+        );
+      }
+      const additionalUserInfo = getAdditionalUserInfo(userCredential);
+      if (
+        additionalUserInfo &&
+        additionalUserInfo.providerId === "google.com"
+      ) {
+        authMethod = "Google";
+      }
+      const user = userCredential.user;
+
+      // Prepare the request body
+      const requestBody = {
         email: user.email, // Only include the email in the request body
       };
-   
-       // Send the request to update the user
-       const response = await fetch('http://localhost:5000/updateUser', {
-         method: 'POST', // Use POST since your endpoint is designed for creating or updating users
-         headers: {
-           'Content-Type': 'application/json',
-         },
-         body: JSON.stringify(requestBody),
-       });
-   
-       if (!response.ok) {
-         throw new Error('Network response was not ok');
-       }
-   
-       navigate('/user');
-       console.log(user.uid);
-       console.log(user);
+
+      // Send the request to update the user
+      const response = await fetch("http://localhost:5000/updateUser", {
+        method: "POST", // Use POST since your endpoint is designed for creating or updating users
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestBody),
+      });
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      navigate("/user");
+      console.log(user.uid);
+      console.log(user);
     } catch (error) {
-       console.error(error);
+      console.error(error);
     }
-   };
-   
-  
-   const handleGoogleSignIn = async () => {
+  };
+
+  const handleGoogleSignIn = async () => {
     try {
-       const result = await signInWithGoogle();
-       const user = result.user;
-   
-       // Prepare the request body
-       const requestBody = {
+      const result = await signInWithGoogle();
+      const user = result.user;
+
+      // Prepare the request body
+      const requestBody = {
         email: user.email, // Only include the email in the request body
       };
-   
-       // Send the request to update the user
-       const response = await fetch('http://localhost:5000/updateUser', {
-         method: 'POST', // Use POST since your endpoint is designed for creating or updating users
-         headers: {
-           'Content-Type': 'application/json',
-         },
-         body: JSON.stringify(requestBody),
-       });
-   
-       if (!response.ok) {
-         throw new Error('Network response was not ok');
-       }
-   
-       navigate('/user');
-       console.log(user.uid);
-       console.log(user);
+
+      // Send the request to update the user
+      const response = await fetch("http://localhost:5000/updateUser", {
+        method: "POST", // Use POST since your endpoint is designed for creating or updating users
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestBody),
+      });
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      navigate("/user");
+      console.log(user.uid);
+      console.log(user);
     } catch (error) {
-       console.error(error);
+      console.error(error);
     }
-   };
+  };
 
   return (
     <CenteredContainer>
@@ -220,6 +232,3 @@ const AuthenticationPage = () => {
 };
 
 export default AuthenticationPage;
-
-
-

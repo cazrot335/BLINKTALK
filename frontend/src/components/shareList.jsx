@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
+import React, { useState, useEffect } from "react";
+import styled from "styled-components";
 
 const User = styled.div`
   display: flex;
@@ -20,26 +20,31 @@ const Username = styled.p`
 `;
 
 const ShareList = ({ onSelectUser }) => {
- const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState([]);
 
- useEffect(() => {
+  useEffect(() => {
     // Fetch user data from your backend
-    fetch('http://localhost:5000/users') // Adjust the URL as necessary
-      .then(response => response.json())
-      .then(data => setUsers(data))
-      .catch(error => console.error('Error fetching users:', error));
- }, []);
+    fetch("http://localhost:5000/users") // Adjust the URL as necessary
+      .then((response) => response.json())
+      .then((data) => setUsers(data))
+      .catch((error) => console.error("Error fetching users:", error));
+  }, []);
 
- return (
-  <div>
-      {users.map(user => (
-        <User key={user._id} onClick={() => onSelectUser(user)}> {/* Call the callback when a user is clicked */}
-          <ProfilePic src={`data:image/jpeg;base64,${user.photo}`} alt={user.username} />
+  return (
+    <div>
+      {users.map((user) => (
+        <User key={user._id} onClick={() => onSelectUser(user)}>
+          {" "}
+          {/* Call the callback when a user is clicked */}
+          <ProfilePic
+            src={`data:image/jpeg;base64,${user.photo}`}
+            alt={user.username}
+          />
           <Username>{user.username}</Username>
         </User>
       ))}
     </div>
- );
+  );
 };
 
 export default ShareList;
