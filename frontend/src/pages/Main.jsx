@@ -8,7 +8,6 @@ const Container = styled.div`
   width: 100vw; /* Use viewport width */
   height: 100vh; /* Use viewport height */
   font-family: "Poppins";
-  font-family: "Poppins";
 `;
 
 const MainContent = styled.div`
@@ -20,13 +19,13 @@ const MainContent = styled.div`
 
 const ShareListContainer = styled.div`
   width: 30%;
-  background-color: #0e2235;
+  background-color: #1e3347;
   overflow-y: scroll;
   font-family: "Poppins";
 `;
 
 const Search = styled.div`
-  background-color: #b0433c;
+  background-color: #0e2235;
   height: 80px;
   display: flex;
   justify-content: center;
@@ -49,6 +48,11 @@ const Search = styled.div`
     height: 45px;
     border: 1px solid transparent;
     cursor: pointer;
+
+    &:hover {
+      background-color: grey;
+      transition-duration: 0.6s;
+    }
   }
 `;
 
@@ -64,14 +68,14 @@ const ChatContainer = styled.div`
 
 const Nav = styled.div`
   height: 80px;
-  background-color: #b0433c;
+  background-color: black;
   margin-bottom: 550px;
   font-family: "Poppins";
 `;
 
 const Message = styled.div`
   height: 80px;
-  background-color: rgb(8 17 39);
+  background-color: black;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -93,6 +97,11 @@ const Message = styled.div`
     height: 45px;
     border: 1px solid transparent;
     cursor: pointer;
+
+    &:hover {
+      background-color: grey;
+      transition-duration: 0.6s;
+    }
   }
 `;
 

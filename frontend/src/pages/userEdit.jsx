@@ -14,22 +14,20 @@ const UserEditContainer = styled.div`
   background-color: #0e2235;
   height: 663px;
   font-family: "Poppins";
-  color: #601712;
+  color: #0889fc;
   font-weight: 600;
 `;
 
 const UserEditForm = styled.form`
-  margin-top: 50px;
+  margin-top: 30px;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  gap: 80px;
   align-items: center;
   width: 100%;
   max-width: 400px;
-  border: 1px solid white;
-  background-color: white;
   border-radius: 10px;
   padding: 50px;
-  box-shadow: 0px 0px 20px 0px rgb(255 255 255 / 81%);
 `;
 
 const ProfilePictureContainer = styled.div`
@@ -84,6 +82,7 @@ const ProfilePictureInput = styled.input`
 const UsernameInput = styled.input`
   width: 100%;
   padding: 10px;
+  font-weight: 600;
   margin-top: 10px;
   margin-bottom: 20px;
   border: 1px solid grey;
@@ -144,8 +143,10 @@ function UserEdit() {
 
   return (
     <UserEditContainer>
-      <UserEditForm onSubmit={handleSubmit}>
         <h1>Get Started</h1>
+      <UserEditForm onSubmit={handleSubmit}>
+<div>
+
         <ProfilePictureContainer>
           <ProfilePicture
             src={photo ? URL.createObjectURL(photo) : Profile}
@@ -159,8 +160,11 @@ function UserEdit() {
             name="photo"
             type="file"
             onChange={(e) => setPhoto(e.target.files[0])}
-          />
+            />
         </ProfilePictureContainer>
+            </div>
+<div>
+
         <label htmlFor="username">
           Username:
           <UsernameInput
@@ -168,9 +172,10 @@ function UserEdit() {
             name="username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-          />
+            />
         </label>
         <SetProfileButton type="submit">Proceed</SetProfileButton>
+            </div>
       </UserEditForm>
     </UserEditContainer>
   );
